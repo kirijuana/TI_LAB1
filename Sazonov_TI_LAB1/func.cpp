@@ -2,8 +2,8 @@
 #include "func_atd.h"
 
 	int alph[33];
-	ifstream fout("E://уч/3 курс/2й семестр/Теория информации/out.txt");
-	ofstream fin("E://уч/3 курс/2й семестр/Теория информации/in.txt");
+	ifstream fin("E://уч/3 курс/2й семестр/Теория информации/in.txt");
+	ofstream fout("E://уч/3 курс/2й семестр/Теория информации/out.txt");
 	
 	void search_symbol()
 	{
@@ -15,7 +15,7 @@
 			alph[i] = 0;
 		}
 
-	getline(fout, text);
+	getline(fin, text);
 	for (int i = 0; i < text.length(); i++)
 	{
 		xx[0] = text.at(i);
@@ -367,9 +367,19 @@
 			alph[32] = alph[32]++;
 		}
 	}
-
 }
 
+void check_n_symbol()
+{
+	string alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
+	for(int i = 0; i < 32; i++)
+	{
+		if (alph[i] != 0)
+		{
+			cout << "Символ - " << alphabet[i] << ", Повторяемость - " << alph[i] << endl;
+		}
+	}
+}
 int N_search_symbol()
 {
 	int N = 0;
@@ -386,6 +396,7 @@ int N_search_symbol()
 
 float* search_probab(int N)
 {
+	string alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 	float *p_symbol = new float[N]();
 	int k = 0;
 	int x = 0;
@@ -401,9 +412,9 @@ float* search_probab(int N)
 	{
 		if (alph[i] != 0)
 		{
-
+			
 			p_symbol[k] = (float(alph[i]) / float(x));
-			cout << "Вероятность k-го символа:" << p_symbol[k] << "\n" << endl;
+			cout << "Вероятность " << alphabet[i] << " символа:" << p_symbol[k] << endl;
 			k++;
 		}
 	}
@@ -417,9 +428,9 @@ float entropy(int N, float *p_symbol)
 	for (int i = 0; i < N; i++)
 	{
 		H += (p_symbol[i] * log2(p_symbol[i]));
-		masH[i] = log2(p_symbol[i]);
-		fin << "Кол-во информации " << i+1 << "-го символа: "  << -masH[i] << endl;
+		masH[i] = -log2(p_symbol[i]);
+		fout << "Кол-во информации " << i+1 << "-го символа: "  << masH[i] << endl;
 	}
-	fin << "Общее кол-во информации сообщения (энтропия):" << -H << endl;
+	fout << "Общее кол-во информации сообщения (энтропия):" << -H << endl;
 	return (-H);
 }

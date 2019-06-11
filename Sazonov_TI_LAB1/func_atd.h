@@ -13,6 +13,7 @@ using namespace std;
 	 int N_search_symbol();
 	 float* search_probab(int N);
 	 float entropy(int N, float *p_probab);
+	 void check_n_symbol();
 #endif
 
 
